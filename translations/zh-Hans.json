@@ -1,0 +1,24 @@
+{
+    "config": {
+        "abort": {
+            "no_devices_found": "No devices found on the network",
+            "single_instance_allowed": "Already configured. Only a single configuration possible."
+        },
+        "step": {
+            "confirm": {
+                "description": "Do you want to start setup?"
+            },
+            "user": {
+                "title": "配置区域标签",
+                "description": "选择区域",
+                "data": {
+                        "area": "区域",
+                        "label": "标签",
+                        "statStateIsOn":"添加属性state为on数量统计",
+                        "mergeLabelStat":"合并标签数量统计"
+
+                    }
+            }
+        }
+    }
+}
