@@ -1,0 +1,1 @@
+home assistant area_label_stat
