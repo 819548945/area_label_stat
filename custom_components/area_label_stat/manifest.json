@@ -1,0 +1,16 @@
+{
+  "domain": "lich",
+  "name": "area_label_stat",
+  "codeowners": [
+    "@819548945"
+  ],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/819548945/area_label_stat",
+
+  "integration_type": "device",
+  "iot_class": "local_push",
+  "quality_scale": "bronze",
+  "requirements": [],
+  "version":"1.0.0"
+}
