@@ -5,13 +5,35 @@
 
 
 <img width="256" height="256" alt="icon" src="https://github.com/819548945/area_label_stat/blob/main/icon/icon.png?raw=true" />
-homeassist integration  area label stat
+## homeassist integration  area label stat
 
 一款统计区域内标签指定状态数量的插件
 
 支持多标签合并统计
 
 支持指定state显示指定状态数量
+
+
+## 5. 安装
+
+请使用以下方式安装:
+
+### 方式1: HACS安装
+
+> 1. 确保`Home Assistant`中已安装HACS [HACS install docs](https://hacs.xyz/docs/setup/download)
+> 2. 打开`HACS`, 点击`[Custom repositories]`, `Repository` 输入: `https://github.com/819548945/area_label_stat`, `Category` 选择 `[Integration]`
+> 3. **重启Home Assistant**.
+
+
+### 方式2: 手工安装
+
+> 1. 从[Latest Release](https://github.com/819548945/area_label_stat/releases/latest) 下载 `area_label_stat.zip`
+> 2. 复制 `area_label_stat.zip` 到 `/custom_components/area_label_stat`.
+> 3. **重启 Home Assistant**.
+
+重启完成后, 打开 `[Settings]`, `[Device & services]`, `[Integrations]`, `[Midea AC Lan]`, 进行初始化设置并添加所有设备.
+
+
 
 使用方式 
 
