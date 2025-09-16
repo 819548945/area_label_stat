@@ -14,7 +14,7 @@
 支持指定state显示指定状态数量
 
 
-## 5. 安装
+## 1. 安装
 
 请使用以下方式安装:
 
@@ -31,11 +31,11 @@
 > 2. 复制 `area_label_stat.zip` 到 `/custom_components/area_label_stat`.
 > 3. **重启 Home Assistant**.
 
-重启完成后, 打开 `[Settings]`, `[Device & services]`, `[Integrations]`, `[Midea AC Lan]`, 进行初始化设置并添加所有设备.
+重启完成后, 打开 `[Settings]`, `[Device & services]`, `[Integrations]`, `[area label stat]`, 进行初始化设置并添加所有设备.
 
 
 
-使用方式 
+## 使用方式 
 
  1.对指定实体添加标签
  
