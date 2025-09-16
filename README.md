@@ -2,7 +2,6 @@
 # area label stat
 [![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/hacs/integration)
 [![Stable](https://img.shields.io/github/v/release/819548945/area_label_stat)](https://github.com/819548945/area_label_stat/releases/latest)
-[![Super-Linter](https://github.com/819548945/area_label_stat/actions/workflows/linter.yml/badge.svg)](https://github.com/marketplace/actions/super-linter)
 
 
 <img width="256" height="256" alt="icon" src="https://github.com/819548945/area_label_stat/blob/main/icon/icon.png?raw=true" />
