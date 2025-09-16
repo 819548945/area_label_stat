@@ -5,7 +5,9 @@
 
 
 <img width="256" height="256" alt="icon" src="https://github.com/819548945/area_label_stat/blob/main/icon/icon.png?raw=true" />
+
 [English](README.md) | 简体中文 
+
 ## 一款统计区域内标签指定状态数量的插件
 
 支持多标签合并统计
