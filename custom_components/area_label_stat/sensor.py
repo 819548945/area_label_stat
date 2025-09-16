@@ -38,30 +38,35 @@ async def async_setup_entry(
 ) -> None:
     """Set up a config entry."""
     areas = areareg_async_get(hass).areas
-
     labels = labelreg_async_get(hass).labels
     device_registry = async_get_device_registry(hass)
     sensor_configs = []
+    title = config_entry.data.get("title", "")
     for area in config_entry.data["area"]:
-        deviceEntry = device_registry.async_get_or_create(
+        """deviceEntry = device_registry.async_get_or_create(
             config_entry_id=config_entry.entry_id,
             identifiers={(DOMAIN, config_entry.entry_id + "_" + area)},
             manufacturer=MANUFACTURER,
-            name="区域:" + ("全部区域" if area == "all" else areas[area].name),
+            name=title
+            + " ("
+            + ("全部区域" if area == "all" else areas[area].name)
+            + ")",
             suggested_area=None if area == "all" else areas[area].name,
-        )
+        )"""
         if config_entry.data["mergeLabelStat"]:
             sensor_configs.append(
                 LichSensorEntity(
                     hass,
-                    deviceEntry,
+                    config_entry,
+                    # deviceEntry,
                     [
                         labels[entity]
                         for entity in config_entry.data["label"]
                         if entity in labels
                     ],
-                    config_entry.data["mergeLabelStat"],
-                    config_entry.data["stateStat"],
+                    # config_entry.data["mergeLabelStat"],
+                    # config_entry.data["stateStat"],
+                    # title,
                     None if area == "all" else areas[area],
                 )
             )
@@ -70,10 +75,12 @@ async def async_setup_entry(
                 sensor_configs.append(  # noqa: PERF401
                     LichSensorEntity(
                         hass,
-                        deviceEntry,
+                        config_entry,
+                        # deviceEntry,
                         [labels[lable]],
-                        config_entry.data["mergeLabelStat"],
-                        config_entry.data["stateStat"],
+                        #    config_entry.data["mergeLabelStat"],
+                        #    config_entry.data["stateStat"],
+                        #    title,
                         None if area == "all" else areas[area],
                     )
                 )
@@ -94,38 +101,41 @@ class LichSensorEntity(SensorEntity):
     def __init__(
         self,
         hass: HomeAssistant,
-        deviceEntry: DeviceEntry,
+        # deviceEntry: DeviceEntry,
+        configEntry: ConfigEntry,
         labels: list[LabelEntry],
-        mergeLabelStat: bool,
-        stateStat: str,
+        # mergeLabelStat: bool,
+        # stateStat: str,
+        # title: str,
         area: AreaEntry = None,
     ) -> None:
         """根据参数生成实体."""
         self._hass = hass
-        self.stateStat = stateStat
+        self.stateStat = configEntry.data["stateStat"]
         self._target_entity_ids = []
         _LOGGER.debug("--------get entity start-------")
         sensor_name = ""
-        sensor_unique_id = deviceEntry.id + "_"
-        entity_ids = []
+        sensor_unique_id = configEntry.entry_id + "_"
+        entity_ids = {}
         entity_registry: EntityRegistry = async_get_entity_registry(hass)
-        lable_entity_ids = set()
+        lable_entity_ids = {}
+        title = configEntry.data.get("title", "")
+        mergeLabelStat = configEntry.data["mergeLabelStat"]
 
-        if mergeLabelStat:
-            sensor_unique_id += "SUM"
-        else:
-            sensor_unique_id += labels[0].name
         for lable in labels:
             sensor_name += "," + lable.name
             lable_entity_id = {
-                entity.entity_id
+                entity.entity_id: entity.labels
                 for entity in entity_registry.entities.values()
                 if lable.label_id in entity.labels
             }
             lable_entity_ids.update(lable_entity_id)
 
         sensor_name = sensor_name[1:]
+        area_name = ""
         if area is not None:
+            sensor_unique_id += area.id + "_"
+            area_name = area.name
             device_registry: DeviceRegistry = async_get_device_registry(hass)
             area_device_ids = {
                 device.id
@@ -144,27 +154,42 @@ class LichSensorEntity(SensorEntity):
                 if entity.area_id == area.id
                 and (entity.labels & {lable.label_id for lable in labels})
             }
-            entity_ids = list((area_entity_ids & lable_entity_ids) | area_entity_ids1)
+            entity_ids = (area_entity_ids & lable_entity_ids.keys()) | area_entity_ids1
         else:
+            sensor_unique_id += "all_"
+            area_name = "全部区域"
             ##直接在实体上配置的区域
             area_entity_ids1 = {
                 entity.entity_id
                 for entity in entity_registry.entities.values()
                 if (entity.labels & {lable.label_id for lable in labels})
             }
-            entity_ids = list(lable_entity_ids | area_entity_ids1)
+            entity_ids = lable_entity_ids.keys() | area_entity_ids1
+        if mergeLabelStat:
+            sensor_unique_id += "SUM"
+        else:
+            sensor_unique_id += labels[0].name
+
+        entity_ids = {k: lable_entity_ids[k] for k in entity_ids}
+
+        _LOGGER.info(f"entity_ids:{lable_entity_ids}")
         _LOGGER.debug(f"entity_ids:{entity_ids}")  # noqa: G004
         _LOGGER.debug("---------get entity end-----------")
         self.entity_id = "sensor." + sensor_unique_id
         self._entity_key = sensor_unique_id
         self._attr_unique_id = sensor_unique_id
-        self._attr_name = "标签:" + sensor_name
+        if title == "":
+            self._attr_name = "" + sensor_name + " (" + area_name + ")"
+        elif mergeLabelStat:
+            self._attr_name = title + " (" + area_name + ")"
+        else:
+            self._attr_name = title + ":" + sensor_name + " (" + area_name + ")"
         self._attr_icon = "mdi:chart-areaspline-variant"
         self._attr_state_class = SensorStateClass.TOTAL
         self._attr_entity_category = EntityCategory.DIAGNOSTIC
         self._attr_native_value = None
         self._attr_extra_state_attributes = {"entity_ids": entity_ids}
-        self._attr_device_info = DeviceInfo(identifiers=deviceEntry.identifiers)
+        # self._attr_device_info = DeviceInfo(identifiers=deviceEntry.identifiers)
         self._unsub_state_change = None
 
     async def async_added_to_hass(self) -> None:
