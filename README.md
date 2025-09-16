@@ -37,15 +37,15 @@ English | [简体中文](README_CN.md)
 
 
 
-## 使用方式 
+## Usage
 
- 1.对指定实体添加标签
+1. Add labels to specified entities
  
- 2.对设备配置区域
+2. Configure the device area
  
- 3.在集成中添加area label stat插件
-
-## 实体展示
+3. Add the area label stat plugin to the integration
+   
+## Physical display
 
 <img width="500"  alt="image" src="https://github.com/user-attachments/assets/99d5d895-d579-4ace-9062-c86e73b698dc" />
 
