@@ -1,56 +1,56 @@
+# Area Label Stat
 
-# area label stat
-[![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/hacs/integration)
+[![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/hacs/integration)  
 [![Stable](https://img.shields.io/github/v/release/819548945/area_label_stat)](https://github.com/819548945/area_label_stat/releases/latest)
 
 English | [简体中文](README_CN.md)
 
 <img width="256" height="256" alt="icon" src="https://github.com/819548945/area_label_stat/blob/main/icon/icon.png?raw=true" />
 
+A custom integration for Home Assistant that counts how many entities **with a given label** are in a **specific state** inside a chosen **area**.  
+- Support for **multiple labels** in a single counter  
+- Support for **filtering by any entity state**
 
+---
 
-## 一款统计区域内标签指定状态数量的插件
+## 1. Installation
 
-支持多标签合并统计
+Pick **one** of the methods below.
 
-支持指定state显示指定状态数量
+### Method 1 – HACS (recommended)
 
+1. Make sure [HACS](https://hacs.xyz/docs/setup/download) is already installed in Home Assistant.  
+2. Open HACS → “Custom repositories” → paste  
+   `https://github.com/819548945/area_label_stat` and choose category **Integration**.  
+3. **Restart Home Assistant**.
 
-## 1. 安装
+### Method 2 – Manual
 
-请使用以下方式安装:
+1. Download [`area_label_stat.zip`](https://github.com/819548945/area_label_stat/releases/latest).  
+2. Extract it into `/config/custom_components/area_label_stat`.  
+3. **Restart Home Assistant**.
 
-### 方式1: HACS安装
+After the restart, go to  
+**Settings → Devices & Services → Integrations → “Area Label Stat”** and complete the configuration.  
+All devices will be added automatically.
 
-> 1. 确保`Home Assistant`中已安装HACS [HACS install docs](https://hacs.xyz/docs/setup/download)
-> 2. 打开`HACS`, 点击`[Custom repositories]`, `Repository` 输入: `https://github.com/819548945/area_label_stat`, `Category` 选择 `[Integration]`
-> 3. **重启Home Assistant**.
-
-
-### 方式2: 手工安装
-
-> 1. 从[Latest Release](https://github.com/819548945/area_label_stat/releases/latest) 下载 `area_label_stat.zip`
-> 2. 复制 `area_label_stat.zip` 到 `/custom_components/area_label_stat`.
-> 3. **重启 Home Assistant**.
-
-重启完成后, 打开 `[Settings]`, `[Device & services]`, `[Integrations]`, `[area label stat]`, 进行初始化设置并添加所有设备.
-
-
+---
 
 ## Usage
 
-1. Add labels to specified entities
- 
-2. Configure the device area
- 
-3. Add the area label stat plugin to the integration
-   
-## Physical display
+1. Assign **labels** to the entities you want to track.  
+2. Make sure those entities belong to a **Home-Assistant area**.  
+3. Add the **Area Label Stat** integration and configure:  
+   - area(s)  
+   - label(s)  
+   - state(s) to count  
 
-<img width="500"  alt="image" src="https://github.com/user-attachments/assets/99d5d895-d579-4ace-9062-c86e73b698dc" />
+---
 
-<img width="500"  alt="image" src="https://github.com/user-attachments/assets/64551085-5b45-4df0-8acd-ab8486d76a51" />
+## Screenshots
 
-<img width="500"  alt="image" src="https://github.com/user-attachments/assets/90c8d08c-e0a8-4f69-af1f-99cba3ab1a5c" />
-
-
+| Dashboard card examples |
+|-------------------------|
+| <img width="500" alt="card1" src="https://github.com/user-attachments/assets/99d5d895-d579-4ace-9062-c86e73b698dc" /> |
+| <img width="500" alt="card2" src="https://github.com/user-attachments/assets/64551085-5b45-4df0-8acd-ab8486d76a51" /> |
+| <img width="500" alt="card3" src="https://github.com/user-attachments/assets/90c8d08c-e0a8-4f69-af1f-99cba6ab1a5c" /> |
